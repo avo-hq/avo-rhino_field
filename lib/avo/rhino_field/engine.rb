@@ -9,7 +9,8 @@ module Avo
         end
 
         app.config.assets.paths << root.join("app", "assets", "svgs", "avo")
-        app.config.assets.precompile += %w(avo-rhino_field.css rhino_field.js *.svg)
+        app.config.assets.precompile += %w(avo-rhino_field.css avo-rhino_field.js)
+        app.config.assets.precompile << '*.svg'
       end
     end
   end
