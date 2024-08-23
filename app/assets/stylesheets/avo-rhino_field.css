@@ -1,0 +1,19 @@
+@import "./../../../node_modules/rhino-editor/exports/styles/trix.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rhino-editor .rhino-toolbar-button,
+.rhino-editor::part(toolbar__button) {
+  --rhino-toolbar-icon-size: 18px;
+  @apply flex items-center justify-center border-none;
+
+  &:hover {
+    @apply shadow-none bg-gray-100;
+  }
+}
+
+.hidden-until-rhino-boots-up {
+  @apply !hidden;
+}

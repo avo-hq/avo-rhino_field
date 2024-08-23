@@ -1,0 +1,30 @@
+{
+  "scripts": {
+    "build": "yarn build:js && yarn build:css",
+    "build:js": "esbuild app/javascript/*.js --bundle --sourcemap --outdir=app/assets/builds",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/avo-rhino_field.css -o ./app/assets/builds/avo-rhino_field.css --postcss",
+    "prod:build": "yarn prod:build:js && yarn prod:build:css",
+    "prod:build:js": "esbuild app/javascript/*.js --bundle --sourcemap --minify --outdir=app/assets/builds",
+    "prod:build:css": "yarn build:css"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@tiptap/extension-color": "^2.6.5",
+    "@tiptap/extension-text-style": "^2.6.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "postcss-nested": "^6.2.0",
+    "rhino-editor": "^0.10.2",
+    "tailwindcss": "^3.4.10"
+  },
+  "name": "avo-rhino_field",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/avo-hq/avo-rhino_field",
+  "author": "Adrian Marin <adrian@adrianthedev.com>",
+  "license": "Commercial",
+  "private": true,
+  "devDependencies": {
+    "esbuild": "^0.23.1"
+  }
+}
