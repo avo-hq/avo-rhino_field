@@ -4,8 +4,11 @@ module Avo
       isolate_namespace Avo::RhinoField
 
       initializer "avo-rhino_field.init" do |app|
-        if defined?(Avo)
-          Avo.plugin_manager.register Avo::RhinoField::Plugin
+        ActiveSupport.on_load(:avo_boot) do
+          Avo.plugin_manager.register_field :rhino, Avo::Fields::RhinoField
+
+          Avo.asset_manager.add_stylesheet "avo-rhino_field"
+          Avo.asset_manager.add_javascript "avo-rhino_field"
         end
 
         app.config.assets.paths << root.join("app", "assets", "svgs", "avo")
