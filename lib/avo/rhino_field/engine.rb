@@ -1,3 +1,5 @@
+require_relative "fields/rhino_field"
+
 module Avo
   module RhinoField
     class Engine < Rails::Engine
@@ -5,6 +7,8 @@ module Avo
 
       initializer "avo-rhino_field.init" do |app|
         ActiveSupport.on_load(:avo_boot) do
+          Avo.plugin_manager.register :rhino
+
           Avo.plugin_manager.register_field :rhino, Avo::Fields::RhinoField
 
           Avo.asset_manager.add_stylesheet "avo-rhino_field"
