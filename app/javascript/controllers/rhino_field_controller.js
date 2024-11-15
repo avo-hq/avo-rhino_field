@@ -1,12 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { Controller } from '@hotwired/stimulus'
-import { TipTapEditor } from 'rhino-editor/exports/elements/tip-tap-editor'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
-import TextStyle from '@tiptap/extension-text-style'
-
-import { HexColor } from './rhino-extensions/hex_color'
+import RhinoEditor from './rhino_editor'
 
 // rgbStyleToHex
 // from https://stackoverflow.com/a/3627747/5433572
@@ -35,8 +29,16 @@ export default class extends Controller {
     return this.element.editor
   }
 
+  get labelElement() {
+    return this.element.closest('[data-field-type="rhino"]').querySelector('[data-slot="label"] label')
+  }
+
   connect() {
     this.#initEditor()
+  }
+
+  disconnect() {
+    this.labelElement.removeEventListener('click', this.#focusEditor.bind(this))
   }
 
   onRhinoBeforeInitialize() {}
@@ -115,28 +117,13 @@ export default class extends Controller {
   }
 
   #initEditor() {
-    class MyEditor extends TipTapEditor {
-      constructor() {
-        super()
-        this.starterKitOptions = {
-          ...this.starterKitOptions,
-          heading: {
-            levels: [1, 2, 3, 4, 5, 6],
-          },
-          rhinoGallery: true,
-        }
+    RhinoEditor.define('avo-rhino-editor')
 
-        this.extensions = [
-          ...this.extensions,
-          Document,
-          Paragraph,
-          Text,
-          TextStyle,
-          HexColor,
-        ]
-      }
-    }
+    // on label click focus the editor
+    this.labelElement.addEventListener('click', this.#focusEditor.bind(this))
+  }
 
-    MyEditor.define('avo-rhino-editor')
+  #focusEditor() {
+    this.editor.commands.focus()
   }
 }
