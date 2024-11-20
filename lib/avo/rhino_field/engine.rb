@@ -9,7 +9,7 @@ module Avo
         ActiveSupport.on_load(:avo_boot) do
           Avo.plugin_manager.register :rhino
 
-          Avo.plugin_manager.register_field :rhino, Avo::Fields::RhinoField
+          Avo.plugin_manager.register_field :rhino, Avo::RhinoField::Fields::RhinoField
 
           Avo.asset_manager.add_stylesheet "avo-rhino_field"
           Avo.asset_manager.add_javascript "avo-rhino_field"
