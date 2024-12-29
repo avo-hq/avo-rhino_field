@@ -1,14 +1,9 @@
 <%= field_wrapper **field_wrapper_args, full_width: true do %>
   <%= content_tag :div, class: "relative block overflow-x-auto max-w-4xl" do %>
     <%= content_tag 'avo-rhino-editor',
-      data: {
-        controller: "rhino-field",
-        blob_url_template: helpers.main_app.rails_service_blob_url(":signed_id", ":filename"),
-        direct_upload_url: helpers.main_app.rails_direct_uploads_url,
-        action: "rhino-before-initialize->rhino-field#onRhinoBeforeInitialize rhino-initialize->rhino-field#onRhinoInitialize rhino-change->rhino-field#onRhinoChange rhino-paste->rhino-field#onRhinoPaste rhino-selection-change->rhino-field#onRhinoSelectionChange rhino-focus->rhino-field#onRhinoFocus rhino-blur->rhino-field#onRhinoBlur rhino-file-accept->rhino-field#onRhinoFileAccept rhino-attachment-add->rhino-field#onRhinoAttachmentAdd rhino-attachment-remove->rhino-field#onRhinoAttachmentRemove",
-        **@field.get_html(:data, view: view, element: :input)
-      },
-      input: field_id,
+      data:,
+      input: unique_id,
+      class: class_names(unique_id),
       placeholder: @field.placeholder do %>
       <button
         type="button"
@@ -44,13 +39,23 @@
           class="h-3.5 w-5 bg-transparent -mt-px -mb-1"
         />
       </button>
+      <button
+        type="button"
+        slot="before-attach-files-button"
+        class="toolbar__button rhino-toolbar-button flex flex-col items-center grow-0 text-sm hidden-until-rhino-boots-up"
+        data-role="toolbar-item"
+        tabindex="-1"
+        data-action="click->rhino-field#openGallery"
+      >
+        <%= helpers.svg "heroicons/outline/photo", class: "!min-h-4 !max-h-4" %>
+      </button>
     <% end %>
     <%= @form.text_area @field.id,
       value: @field.value.try(:to_trix_html) || @field.value,
       class: classes("w-full hidden"),
       data: @field.get_html(:data, view: view, element: :input),
       disabled: disabled?,
-      id: field_id,
+      id: unique_id,
       placeholder: @field.placeholder,
       style: @field.get_html(:style, view: view, element: :input)
     %>
