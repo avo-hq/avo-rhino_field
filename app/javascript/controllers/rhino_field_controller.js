@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file */
 import { Controller } from '@hotwired/stimulus'
 import RhinoEditor from './rhino_editor'
+import { post } from '@rails/request.js'
+import { AttachmentManager } from 'rhino-editor/exports/attachment-manager'
 
 // rgbStyleToHex
 // from https://stackoverflow.com/a/3627747/5433572
@@ -24,6 +26,11 @@ function rgbStyleToHex(color) {
 
 export default class extends Controller {
   static targets = ['textColorInput', 'backgroundColorInput']
+
+  static values = {
+    resourceName: String,
+    resourceId: String,
+  }
 
   get editor() {
     return this.element.editor
@@ -92,6 +99,38 @@ export default class extends Controller {
     } else {
       this.textColorInputTarget.value = this.DEFAULT_TEXT_COLOR
     }
+  }
+
+  async openGallery() {
+    post(`${window.Avo.configuration.root_path}/media_library`, {
+      query: {
+        resource_name: this.resourceNameValue,
+        record_id: this.resourceIdValue,
+        controller_selector: this.element.dataset.rhinoFieldUniqueSelectorValue,
+        controller_name: this.identifier,
+      },
+      responseKind: 'turbo-stream',
+    })
+  }
+
+  // Invoked by the other controllers (media-library)
+  insertAttachments(attachments, event) {
+    console.log('insertAttachment<>', this, event)
+    // const { blob, path } = event.params
+    const editorAttachments = attachments.map((attachment) => {
+      const { blob, path } = attachment
+
+      return new AttachmentManager({
+        src: path,
+        width: blob.width,
+        height: blob.height,
+        filename: blob.filename,
+        contentType: blob.content_type,
+        previewable: true,
+      })
+    })
+
+    this.editor?.chain().focus().setAttachment(editorAttachments).run();
   }
 
   setBackgroundColor(event) {
