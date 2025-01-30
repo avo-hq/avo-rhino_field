@@ -1,0 +1,124 @@
+#!/usr/bin/env ruby
+
+# From https://github.com/hotwired/hotwire-combobox
+
+require_relative "../lib/avo/rhino_field/version"
+require "bundler/gem_tasks"
+require "pathname"
+require "json"
+
+class Release
+  def initialize(version, dry: false)
+    @version = version
+    @dry = dry
+  end
+
+  def perform
+    write_version
+    # update_copyright
+    bundle
+    commit
+    # push_npm_package
+    build_and_push_gem
+    cleanup
+
+    puts "== Done! =="
+  end
+
+  private
+    attr_reader :version, :dry
+
+    def dry?
+      dry
+    end
+
+    def write_version
+      puts "== Writing version to files =="
+
+      if Gem::Version.new(version) <= Gem::Version.new(Avo::RhinoField::VERSION)
+        abort "❌ New version (#{version}) must be greater than #{Avo::RhinoField::VERSION}"
+      end
+
+      write_version_to_rb
+      # write_version_to_gemfile_lock
+      write_version_to_js
+    end
+
+    def write_version_to_rb
+      Pathname.new("./lib/avo/rhino_field/version.rb").write <<~RUBY
+        module Avo
+          module RhinoField
+            VERSION = "#{version}"
+          end
+        end
+      RUBY
+    end
+
+    def write_version_to_gemfile_lock
+      pathname = Pathname.new "./Gemfile.lock"
+      data = pathname.read
+      data.sub!(/avo-rhino_field \(\d+\.\d+\.\d+\)/, "avo-rhino_field (#{version})")
+      pathname.write data
+    end
+
+    def write_version_to_js
+      pathname = Pathname.new "package.json"
+      data = JSON.parse pathname.read
+      data["version"] = version
+      pathname.write JSON.pretty_generate(data) + "\n"
+    end
+
+    def update_copyright
+      puts "== Updating license year =="
+
+      pathname = Pathname.new "MIT-LICENSE"
+      data = pathname.read
+      data.sub!(/Copyright \d{4}/, "Copyright #{Time.now.year}")
+      pathname.write data
+    end
+
+    def bundle
+      # puts "== Bundling Gemfile =="
+      # abort "❌ Failed to bundle" unless system "bundle"
+
+      puts "== Bundling JS =="
+      abort "❌ Failed to bundle JS" unless system "yarn build"
+    end
+
+    def commit
+      if dry?
+        puts "== Tracking changes =="
+      else
+        puts "== Committing changes =="
+      end
+
+      abort("❌ Failed to commit") unless \
+        system("git add .") &&
+        (dry? ? true : system("git commit -m 'Bump version for #{version}'")) &&
+        (dry? ? true : system("git push"))
+    end
+
+    def push_npm_package
+      puts "== Pushing npm package =="
+
+      abort "❌ Must be logged in to npm" unless system "npm whoami"
+      abort "❌ npm publish failed" unless system "npm publish"
+
+      puts "✅ Successfully published npm release"
+    end
+
+    def build_and_push_gem
+      unless dry?
+        puts "== Building and pushing gem =="
+
+        abort "❌ Failed to release gem" unless system "bundle exec rake release"
+      end
+    end
+
+    def cleanup
+      puts "== Cleaning up =="
+      system "rm -rf pkg"
+    end
+end
+
+Release.new(ARGV[0], dry: ARGV.include?("--dry")).perform
