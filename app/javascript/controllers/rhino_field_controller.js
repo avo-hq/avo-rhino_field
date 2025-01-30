@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Controller } from '@hotwired/stimulus'
 import RhinoEditor from './rhino_editor'
-import { post } from '@rails/request.js'
+// import { post } from '@rails/request.js'
 import { AttachmentManager } from 'rhino-editor/exports/attachment-manager'
 
 // rgbStyleToHex
