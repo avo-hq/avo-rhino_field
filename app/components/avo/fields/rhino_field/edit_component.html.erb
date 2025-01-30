@@ -39,16 +39,16 @@
           class="h-3.5 w-5 bg-transparent -mt-px -mb-1"
         />
       </button>
-      <button
-        type="button"
+      <a
         slot="before-attach-files-button"
         class="toolbar__button rhino-toolbar-button flex flex-col items-center grow-0 text-sm hidden-until-rhino-boots-up"
         data-role="toolbar-item"
         tabindex="-1"
-        data-action="click->rhino-field#openGallery"
+        href="<%= helpers.avo.attach_media_path(resource_name: @resource.name, record_id: @resource.id, controller_selector: ".#{unique_id}", controller_name: 'rhino-field') %>"
+        data-turbo-frame="<%= ::Avo::MODAL_FRAME_ID %>"
       >
         <%= helpers.svg "heroicons/outline/photo", class: "!min-h-4 !max-h-4" %>
-      </button>
+      </a>
     <% end %>
     <%= @form.text_area @field.id,
       value: @field.value.try(:to_trix_html) || @field.value,

@@ -101,17 +101,17 @@ export default class extends Controller {
     }
   }
 
-  async openGallery() {
-    post(`${window.Avo.configuration.root_path}/media_library`, {
-      query: {
-        resource_name: this.resourceNameValue,
-        record_id: this.resourceIdValue,
-        controller_selector: this.element.dataset.rhinoFieldUniqueSelectorValue,
-        controller_name: this.identifier,
-      },
-      responseKind: 'turbo-stream',
-    })
-  }
+  // async openGallery() {
+  //   post(`${window.Avo.configuration.root_path}/media-library`, {
+  //     query: {
+  //       resource_name: this.resourceNameValue,
+  //       record_id: this.resourceIdValue,
+  //       controller_selector: this.element.dataset.rhinoFieldUniqueSelectorValue,
+  //       controller_name: this.identifier,
+  //     },
+  //     responseKind: 'turbo-stream',
+  //   })
+  // }
 
   // Invoked by the other controllers (media-library)
   insertAttachments(attachments, event) {
