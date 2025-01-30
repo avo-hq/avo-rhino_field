@@ -111,7 +111,10 @@ class Release
       unless dry?
         puts "== Building and pushing gem =="
 
-        abort "❌ Failed to release gem" unless system "bundle exec rake release"
+        # abort "❌ Failed to release gem" unless system "bundle exec rake release"
+        abort "❌ Failed to build gem" unless system "gem build -o avo-rhino_field.gem"
+        abort "❌ Failed to push gem to github" unless system "gem push --key github --host https://rubygems.pkg.github.com/avo-hq ./avo-rhino_field.gem"
+        abort "❌ Failed to push gem to rubygems.org" unless system "gem push --host https://rubygems.org/ ./avo-rhino_field.gem"
       end
     end
 
