@@ -1,8 +1,6 @@
-@import "./../../../node_modules/rhino-editor/exports/styles/trix.css";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./../../../node_modules/rhino-editor/exports/styles/trix.css";
 
 .rhino-editor .rhino-toolbar-button,
 .rhino-editor::part(toolbar__button) {
