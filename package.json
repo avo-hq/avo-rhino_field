@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "js:visualize": "yarn prod:build:js -- --metafile=js_bundle_metadata.json && esbuild-visualizer --metadata=js_bundle_metadata.json --filename=js_bundle_stats.html",
     "build": "yarn build:js && yarn build:css",
     "build:js": "esbuild app/javascript/*.js --bundle --sourcemap --outdir=app/assets/builds",
     "build:css": "tailwindcss -i ./app/assets/stylesheets/avo-rhino_field.css -o ./app/assets/builds/avo-rhino_field.css --postcss",
@@ -14,7 +15,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
     "postcss-nested": "^6.2.0",
-    "rhino-editor": "^0.10.2",
+    "rhino-editor": "^0.16.8",
     "tailwindcss": "^3.4.10"
   },
   "name": "avo-rhino_field",
@@ -25,6 +26,7 @@
   "license": "Commercial",
   "private": true,
   "devDependencies": {
-    "esbuild": "^0.23.1"
+    "esbuild": "^0.23.1",
+    "esbuild-visualizer": "^0.3.1"
   }
 }
