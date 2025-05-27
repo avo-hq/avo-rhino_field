@@ -2,7 +2,7 @@
 import { Controller } from '@hotwired/stimulus'
 import RhinoEditor from './rhino_editor'
 // import { post } from '@rails/request.js'
-import { AttachmentManager } from 'rhino-editor/exports/attachment-manager'
+import { AttachmentManager } from 'rhino-editor'
 
 // rgbStyleToHex
 // from https://stackoverflow.com/a/3627747/5433572
