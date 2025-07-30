@@ -1,5 +1,5 @@
 module Avo
   module RhinoField
-    VERSION = "0.0.17.pre.2"
+    VERSION = "0.0.17.pre.3"
   end
 end
