@@ -8,7 +8,7 @@ module Avo
       initializer "avo.assets" do |app|
         if app.config.respond_to?(:assets)
           if defined?(Sprockets)
-            app.config.assets.precompile += %w[avo-rhino_field.js]
+            app.config.assets.precompile += %w[avo-rhino_field_manifest.js]
           end
         end
       end
