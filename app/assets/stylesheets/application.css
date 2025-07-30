@@ -1,8 +1,9 @@
-@import "./../../../node_modules/rhino-editor/exports/styles/trix.css";
+@layer theme, base, components, utilities;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "./../../../node_modules/rhino-editor/exports/styles/trix.css";
 
 .rhino-editor .rhino-toolbar-button,
 .rhino-editor::part(toolbar__button) {
