@@ -6,7 +6,7 @@
       controller: "trix-body hidden-input",
       trix_body_always_show_value: @field.always_show
     } do %>
-    <div class="<%= class_names("trix-content border-none px-0 py-2 max-w-4xl", "hidden": !@field.always_show) %>" data-trix-body-target="content" data-hidden-input-target="content">
+    <div class="<%= class_names("trix-content border-none px-0 max-w-4xl", "hidden": !@field.always_show) %>" data-trix-body-target="content" data-hidden-input-target="content">
       <%== @field.value %>
     </div>
     <% if true %>

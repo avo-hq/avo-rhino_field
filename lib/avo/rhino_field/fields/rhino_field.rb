@@ -10,6 +10,7 @@ module Avo
           hide_on :index
 
           @always_show = args[:always_show] || false
+          @stacked = args[:stacked] || true
         end
 
         def view_component_namespace

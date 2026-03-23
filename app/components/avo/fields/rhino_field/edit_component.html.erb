@@ -17,10 +17,10 @@
         <input
           type="color"
           slot="after-undo-button"
+          autocomplete="off"
           data-action="input->rhino-field#setTextColor"
           data-rhino-field-target="textColorInput"
-          class="h-3.5 w-5 bg-transparent -mt-px -mb-1"
-        />
+          class="h-3.5 w-5 bg-transparent -mt-px -mb-1 p-0">
       </button>
       <button
         type="button"
@@ -33,11 +33,11 @@
         <%= helpers.svg "avo/gradient", class: "!min-h-4 !max-h-4" %>
         <input
           type="color"
+          autocomplete="off"
           slot="after-undo-button"
           data-action="input->rhino-field#setBackgroundColor"
           data-rhino-field-target="backgroundColorInput"
-          class="h-3.5 w-5 bg-transparent -mt-px -mb-1"
-        />
+          class="h-3.5 w-5 bg-transparent -mt-px -mb-1 p-0">
       </button>
       <a
         slot="before-attach-files-button"

@@ -1,0 +1,28 @@
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "../../../../../avo/app/assets/stylesheets/css/variables.css"
+  layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "rhino-editor/exports/styles/trix.css" layer(base);
+
+@layer components {
+  .rhino-editor::part(toolbar__base) {
+    @apply px-2 py-0;
+  }
+
+  .rhino-editor .rhino-toolbar-button,
+  .rhino-editor::part(toolbar__button) {
+    --rhino-toolbar-icon-size: 18px;
+    @apply flex items-center justify-center border-none;
+
+    &:hover {
+      @apply shadow-none bg-gray-100;
+    }
+  }
+
+  .hidden-until-rhino-boots-up {
+    @apply !hidden;
+  }
+}
