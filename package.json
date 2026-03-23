@@ -17,7 +17,7 @@
     "tailwindcss": "^4.1.11"
   },
   "name": "avo-rhino_field",
-  "version": "0.0.15",
+  "version": "4.0.0",
   "main": "index.js",
   "repository": "https://github.com/avo-hq/avo-rhino_field",
   "author": "Adrian Marin <adrian@adrianthedev.com>",
