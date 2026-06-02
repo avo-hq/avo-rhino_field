@@ -7,7 +7,7 @@ module Avo
 
       initializer "avo-rhino_field.init" do |app|
         ActiveSupport.on_load(:avo_boot) do
-          Avo.plugin_manager.register :rhino
+          Avo.plugin_manager.register "avo-rhino_field"
 
           Avo.plugin_manager.register_field :rhino, Avo::RhinoField::Fields::RhinoField
 
